@@ -1,0 +1,142 @@
+# Path
+export PATH=$PATH:$HOME/bin
+
+#export GOPATH=$HOME
+export EDITOR=vim
+export VISUAL=vim
+#export JAVA_HOME=$HOME/jdk15
+#export PYTHONPATH=$HOME/my_py_libs
+
+##################################
+######## Aliases ###############
+##############################
+alias ls="ls --color"
+alias ll="ls -la"
+alias la="ls -a"
+alias lr="ls -latr"
+alias grep="grep --color"
+alias zrc="$EDITOR $HOME/.zshrc"
+alias zrcl="$EDITOR $HOME/.zshrc.local"
+alias st='git status'
+alias youtube-x='youtube-dl -x --audio-format vorbis --audio-quality 0'
+alias act='source ~/venv/bin/activate'
+#####################
+###################
+################
+
+
+######################################
+### Load local settings ############
+##################################
+source $HOME/.zshrc.local
+############################
+##########################
+########################
+
+
+
+####################################
+############ Functions ###########
+################################
+
+# hello() {
+#   echo "hello!"
+# }
+
+########################
+### End Functions ####
+####################
+
+
+
+
+
+############################
+# Set vi mode or emacs mode
+###########################
+bindkey -v # -v or -e
+
+
+
+
+
+
+#############################################
+# Allow # to act as comment even in shell
+###############################################
+setopt interactivecomments
+
+####################################################
+# Allow use of editor to craft complex commands
+###################################################
+autoload -z edit-command-line
+zle -N edit-command-line
+# If emacs mode
+bindkey "^X^E" edit-command-line
+# if vi mode
+bindkey -M vicmd v edit-command-line
+
+
+##################################
+####### Prompt ################
+############################
+# Refer to:
+# http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+# colors: black red green yellow blue magenta cyan white
+# %n user
+# %m host
+# %~  cwd
+# %W for date, %*  for time RPROMPT='%* %?'
+# %? return code or %(?.√.?%?) to show checkmark or error code
+# colors %F{...}  to set foreground color 
+# bold %B to start and `%b` to end
+# %f to turn off all formatting and reset
+
+### ALLOW GIT STATUS in prompt ########
+autoload -Uz vcs_info  # Where do these come from? What else is there?
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
+zstyle ':vcs_info:*' enable git
+######################################
+
+# One example:
+PROMPT='%F{cyan}%n%f@%F{white}%m%f:%F{cyan}%~%F{white}>>%f '
+RPROMPT="%W %* %(?.%F{green}√%f.%F{red}%?%f) \$vcs_info_msg_0_"
+
+# Another example with multi-line prompt
+PROMPT="%f[%F{blue}%W %*%f][%F{cyan}%n@%m%f][%F{cyan}%~%f]
+->%f "
+RPROMPT="\$vcs_info_msg_0_ %(?..%F{red}❌%?%f)"
+
+
+#############################
+##### END PROMPT #########
+########################
+
+
+
+
+
+
+
+#######
+# Activate Python venv if none is active
+#####
+# if [[ -z $VIRTUAL_ENV  ]]
+# then
+#   source $HOME/venv/bin/activate
+# fi
+
+######
+# Use neovim if available
+####
+# if [ -f /usr/bin/nvim ]
+# then
+#   alias vim=nvim
+#   export EDITOR=nvim
+# else
+#   export EDITOR=vim
+# fi
+

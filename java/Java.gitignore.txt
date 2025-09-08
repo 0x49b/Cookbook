@@ -1,0 +1,8 @@
+private
+build
+target
+nbactions.mxl
+*.class
+*.iml
+.idea
+nb-configuration.xml
